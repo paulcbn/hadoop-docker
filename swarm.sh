@@ -18,11 +18,12 @@ docker service create \
 docker service create \
     --mount type=volume,src=datanode_volume,dst=/hadoop-data/dfs/data \
     --name datanode \
+    --replicas 3 \
     --network my-overlay \
     --endpoint-mode dnsrr \
     --env SERVICE_PRECONDITION="namenode:9870 namenode:9000" \
     --env NODE_MANAGER_PRECONDITION="resourcemanager:8088" \
-    --env CONTAINER_NAME=container1 \
+    --env CONTAINER_NAME=container_{{.Task.Slot}} \
     --env-file hadoop.env \
     --detach=true \
     paulcbn/hadoop-datanode
