@@ -3,7 +3,7 @@ version: "3"
 services:
   namenode:
     build: ./namenode    
-    image: namenode
+    image: paulcbn/hadoop-namenode
     container_name: namenode
     restart: always
     ports:
@@ -18,43 +18,43 @@ services:
 
   node:
     build: ./node    
-    image: node
+    image: paulcbn/hadoop-node
     restart: always    
     volumes:    
       - hadoop_datanode:/hadoop-data/dfs/data
     environment:
       SERVICE_PRECONDITION: "namenode:9870 namenode:9000 resourcemanager:8088"
-      CONTAINER_NAME: "container1"
+      CONTAINER_NAME: "1"
     env_file:
       - ./hadoop.env
   
   node2:
     build: ./node    
-    image: node
+    image: paulcbn/hadoop-node
     restart: always    
     volumes:    
       - hadoop_datanode:/hadoop-data/dfs/data
     environment:
       SERVICE_PRECONDITION: "namenode:9870 namenode:9000 resourcemanager:8088"
-      CONTAINER_NAME: "container3"
+      CONTAINER_NAME: "2"
     env_file:
       - ./hadoop.env
 
   node3:
     build: ./node    
-    image: node
+    image: paulcbn/hadoop-node
     restart: always    
     volumes:    
       - hadoop_datanode:/hadoop-data/dfs/data
     environment:
       SERVICE_PRECONDITION: "namenode:9870 namenode:9000 resourcemanager:8088"
-      CONTAINER_NAME: "container2"
+      CONTAINER_NAME: "3"
     env_file:
       - ./hadoop.env
 
   resourcemanager:
     build: ./resourcemanager    
-    image: resourcemanager
+    image: paulcbn/hadoop-resourcemanager
     container_name: resourcemanager
     restart: always
     environment:
@@ -73,7 +73,7 @@ services:
   
   historyserver:
     build: ./historyserver   
-    image: historyserver 
+    image: paulcbn/hadoop-historyserver 
     container_name: historyserver
     restart: always
     environment:

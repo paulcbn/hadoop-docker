@@ -18,7 +18,7 @@ docker service create \
 docker service create \
     --mount type=volume,src=datanode_volume,dst=/hadoop-data/dfs/data \
     --name datanode \
-    --replicas 3 \
+    --replicas 4 \
     --network my-overlay \
     --endpoint-mode dnsrr \
     --env SERVICE_PRECONDITION="namenode:9870 namenode:9000" \
@@ -40,3 +40,15 @@ docker service create \
     --env-file hadoop.env \
     --detach=true \
     paulcbn/hadoop-resourcemanager
+
+
+# history server:
+docker service create \
+    --mount type=volume,src=historyserver_volume,dst=/hadoop/yarn/timeline \
+    --name historyserver \
+    --network my-overlay \
+    --endpoint-mode dnsrr \
+    --env SERVICE_PRECONDITION="resourcemanager:8088" \
+    --env-file hadoop.env \
+    --detach=true \
+    paulcbn/hadoop-historyserver

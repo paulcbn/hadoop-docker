@@ -1,4 +1,4 @@
-FROM hadoop-base
+FROM paulcbn/hadoop-base
 
 
 HEALTHCHECK CMD curl -f http://localhost:8188/ || exit 1
